@@ -8,7 +8,8 @@ struct c25_camera {
 
 	float aspect;
 
-	union sm_mat4 mat;
+	union sm_mat4 mv_mat, proj_mat;
+	union sm_mat4 mvp_mat;
 };
 
 static void
@@ -20,13 +21,11 @@ _cal_mat(struct c25_camera* cam) {
 	sm_mat4_identity(&tmat);
 	sm_mat4_trans(&tmat, cam->pos.x, cam->pos.y, cam->pos.z);
 
-	union sm_mat4 mv_mat;
-	sm_mat4_mul(&mv_mat, &rmat, &tmat);
+	sm_mat4_mul(&cam->mv_mat, &rmat, &tmat);
 
-	union sm_mat4 proj_mat;
-	sm_mat4_perspective(&proj_mat, -cam->aspect, cam->aspect, -1, 1, 1, 9999);
+	sm_mat4_perspective(&cam->proj_mat, -cam->aspect, cam->aspect, -1, 1, 1, 9999);
 
-	sm_mat4_mul(&cam->mat, &proj_mat, &mv_mat);
+	sm_mat4_mul(&cam->mvp_mat, &cam->proj_mat, &cam->mv_mat);
 }
 
 struct c25_camera* 
@@ -68,6 +67,16 @@ c25_cam_rotate(struct c25_camera* cam, float da) {
 	_cal_mat(cam);
 }
 
+const union sm_mat4* 
+c25_cam_get_movelview_mat(const struct c25_camera* cam) {
+	return &cam->mv_mat;
+}
+
+const union sm_mat4* 
+c25_cam_get_project_mat(const struct c25_camera* cam) {
+	return &cam->proj_mat;
+}
+
 const struct sm_vec3* 
 c25_cam_get_pos(struct c25_camera* cam) {
 	return &cam->pos;
@@ -107,7 +116,7 @@ struct sm_ivec2*
 c25_world_to_screen(struct c25_camera* cam, struct sm_ivec2* screen, 
 					const struct sm_vec3* world, int sw, int sh) {
 	struct sm_vec3 vec = *world;
-	sm_vec3_mul(&vec, &cam->mat);
+	sm_vec3_mul(&vec, &cam->mvp_mat);
 	screen->x = (vec.x + 1) * 0.5f * sw;
 	screen->y = (vec.y + 1) * 0.5f * sh;
 	return screen;
