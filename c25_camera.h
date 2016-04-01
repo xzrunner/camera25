@@ -13,11 +13,13 @@ struct c25_camera;
 struct c25_camera* c25_cam_create(struct sm_vec3* pos, float angle, float aspect);
 void c25_cam_release(struct c25_camera*);
 
-void c25_cam_reset(struct c25_camera*, struct sm_vec3* pos, float angle);
 void c25_cam_translate(struct c25_camera*, struct sm_vec3* offset);
 void c25_cam_rotate(struct c25_camera*, float da);
 
-const union sm_mat4* c25_cam_get_movelview_mat(const struct c25_camera* cam);
+void c25_cam_set_modelview(struct c25_camera*, struct sm_vec3* pos, float angle);
+void c25_cam_set_project(struct c25_camera*, float aspect);
+
+const union sm_mat4* c25_cam_get_modelview_mat(const struct c25_camera* cam);
 const union sm_mat4* c25_cam_get_project_mat(const struct c25_camera* cam);
 
 const struct sm_vec3* c25_cam_get_pos(struct c25_camera*);
