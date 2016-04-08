@@ -84,15 +84,8 @@ c25_cam_set_pos(struct c25_camera* cam, const struct sm_vec3* pos) {
 }
 
 void 
-c25_cam_set_modelview(struct c25_camera* cam, struct sm_vec3* pos, float angle) {
-	cam->pos = *pos;
+c25_cam_set_angle(struct c25_camera* cam, float angle) {
 	cam->angle = angle;
-	_cal_mat(cam);	
-}
-
-void 
-c25_cam_set_project(struct c25_camera* cam, float aspect) {
-	cam->aspect = aspect;
 	_cal_mat(cam);
 }
 
