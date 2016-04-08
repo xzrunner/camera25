@@ -36,7 +36,7 @@ c25_cam_create(struct sm_vec3* pos, float angle, float aspect) {
 	cam->angle = angle;
 	cam->aspect = aspect;
 
-	_cal_mat(cam);	
+	_cal_mat(cam);
 
 	return cam;
 }
@@ -60,6 +60,12 @@ c25_cam_rotate(struct c25_camera* cam, float da) {
 	_cal_mat(cam);
 }
 
+void
+c25_cam_set_pos(struct c25_camera* cam, const struct sm_vec3* pos) {
+	cam->pos = *pos;
+	_cal_mat(cam);	
+}
+
 void 
 c25_cam_set_modelview(struct c25_camera* cam, struct sm_vec3* pos, float angle) {
 	cam->pos = *pos;
@@ -81,11 +87,6 @@ c25_cam_get_modelview_mat(const struct c25_camera* cam) {
 const union sm_mat4* 
 c25_cam_get_project_mat(const struct c25_camera* cam) {
 	return &cam->proj_mat;
-}
-
-const struct sm_vec3* 
-c25_cam_get_pos(struct c25_camera* cam) {
-	return &cam->pos;
 }
 
 float 
