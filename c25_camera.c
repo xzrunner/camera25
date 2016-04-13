@@ -99,13 +99,18 @@ c25_cam_get_project_mat(const struct c25_camera* cam) {
 	return &cam->proj_mat;
 }
 
+const struct sm_vec3* 
+c25_cam_get_pos(const struct c25_camera* cam) {
+	return &cam->pos;
+}
+
 float 
-c25_cam_get_angle(struct c25_camera* cam) {
+c25_cam_get_angle(const struct c25_camera* cam) {
 	return cam->angle;
 }
 
 struct sm_vec2*  
-c25_screen_to_world(struct c25_camera* cam, struct sm_vec2* world, 
+c25_screen_to_world(const struct c25_camera* cam, struct sm_vec2* world, 
 					const struct sm_ivec2* screen, int sw, int sh) {
 	float dy = 2.0f * (sh - screen->y) / sh - 1;
 	if (cam->c.tan_rad * dy == 1) {
@@ -127,7 +132,7 @@ c25_screen_to_world(struct c25_camera* cam, struct sm_vec2* world,
 }
 
 struct sm_ivec2* 
-c25_world_to_screen(struct c25_camera* cam, struct sm_ivec2* screen, 
+c25_world_to_screen(const struct c25_camera* cam, struct sm_ivec2* screen, 
 					const struct sm_vec3* world, int sw, int sh) {
 	struct sm_vec3 vec = *world;
 	sm_vec3_mul(&vec, &cam->c.mvp_mat);
