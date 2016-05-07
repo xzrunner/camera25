@@ -7,6 +7,10 @@ extern "C"
 #define camera25_camera_h
 
 struct c25_camera;
+struct sm_vec3;
+union sm_mat4;
+struct sm_vec2;
+struct sm_ivec2;
 
 struct c25_camera* c25_cam_create(struct sm_vec3* pos, float angle, float aspect);
 void c25_cam_release(struct c25_camera*);
