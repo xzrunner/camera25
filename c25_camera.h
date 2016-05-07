@@ -6,8 +6,6 @@ extern "C"
 #ifndef camera25_camera_h
 #define camera25_camera_h
 
-#include <sm.h>
-
 struct c25_camera;
 
 struct c25_camera* c25_cam_create(struct sm_vec3* pos, float angle, float aspect);

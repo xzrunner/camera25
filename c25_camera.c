@@ -1,6 +1,11 @@
 #include "c25_camera.h"
 
+#include <sm_c_matrix.h>
+#include <sm_c_vector.h>
+#include <sm_const.h>
+
 #include <stdlib.h>
+#include <math.h>
 
 struct var_cache {
 	union sm_mat4 mvp_mat;
