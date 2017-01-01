@@ -51,7 +51,7 @@ _cal_mat(struct c25_camera* cam) {
 }
 
 struct c25_camera* 
-c25_cam_create(struct sm_vec3* pos, float angle, float aspect) {
+c25_cam_create(const struct sm_vec3* pos, float angle, float aspect) {
 	struct c25_camera* cam = malloc(sizeof(*cam));
 
 	cam->pos = *pos;
