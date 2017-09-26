@@ -141,7 +141,7 @@ c25_world_to_screen(const struct c25_camera* cam, struct sm_ivec2* screen,
 					const struct sm_vec3* world, int sw, int sh) {
 	struct sm_vec3 vec = *world;
 	sm_vec3_mul(&vec, &cam->c.mvp_mat);
-	screen->x = (vec.x + 1) * 0.5f * sw;
-	screen->y = (vec.y + 1) * 0.5f * sh;
+	screen->x = (int)((vec.x + 1) * 0.5f * sw);
+	screen->y = (int)((vec.y + 1) * 0.5f * sh);
 	return screen;
 }
