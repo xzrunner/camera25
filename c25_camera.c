@@ -50,7 +50,7 @@ _cal_mat(struct c25_camera* cam) {
 	_update_var_cache(cam);
 }
 
-struct c25_camera* 
+struct c25_camera*
 c25_cam_create(const struct sm_vec3* pos, float angle, float aspect) {
 	struct c25_camera* cam = malloc(sizeof(*cam));
 
@@ -63,12 +63,12 @@ c25_cam_create(const struct sm_vec3* pos, float angle, float aspect) {
 	return cam;
 }
 
-void 
+void
 c25_cam_release(struct c25_camera* cam) {
 	free(cam);
 }
 
-void 
+void
 c25_cam_translate(struct c25_camera* cam, struct sm_vec3* offset) {
 	cam->pos.x += offset->x;
 	cam->pos.y += offset->y;
@@ -76,7 +76,7 @@ c25_cam_translate(struct c25_camera* cam, struct sm_vec3* offset) {
 	_cal_mat(cam);
 }
 
-void 
+void
 c25_cam_rotate(struct c25_camera* cam, float da) {
 	cam->angle += da;
 	_cal_mat(cam);
@@ -85,37 +85,37 @@ c25_cam_rotate(struct c25_camera* cam, float da) {
 void
 c25_cam_set_pos(struct c25_camera* cam, const struct sm_vec3* pos) {
 	cam->pos = *pos;
-	_cal_mat(cam);	
+	_cal_mat(cam);
 }
 
-void 
+void
 c25_cam_set_angle(struct c25_camera* cam, float angle) {
 	cam->angle = angle;
 	_cal_mat(cam);
 }
 
-const union sm_mat4* 
+const union sm_mat4*
 c25_cam_get_modelview_mat(const struct c25_camera* cam) {
 	return &cam->mv_mat;
 }
 
-const union sm_mat4* 
+const union sm_mat4*
 c25_cam_get_project_mat(const struct c25_camera* cam) {
 	return &cam->proj_mat;
 }
 
-const struct sm_vec3* 
+const struct sm_vec3*
 c25_cam_get_pos(const struct c25_camera* cam) {
 	return &cam->pos;
 }
 
-float 
+float
 c25_cam_get_angle(const struct c25_camera* cam) {
 	return cam->angle;
 }
 
-struct sm_vec2*  
-c25_screen_to_world(const struct c25_camera* cam, struct sm_vec2* world, 
+struct sm_vec2*
+c25_screen_to_world(const struct c25_camera* cam, struct sm_vec2* world,
 					const struct sm_ivec2* screen, int sw, int sh) {
 	float dy = 2.0f * (sh - screen->y) / sh - 1;
 	if (cam->c.tan_rad * dy == 1) {
@@ -136,8 +136,8 @@ c25_screen_to_world(const struct c25_camera* cam, struct sm_vec2* world,
 	return world;
 }
 
-struct sm_ivec2* 
-c25_world_to_screen(const struct c25_camera* cam, struct sm_ivec2* screen, 
+struct sm_ivec2*
+c25_world_to_screen(const struct c25_camera* cam, struct sm_ivec2* screen,
 					const struct sm_vec3* world, int sw, int sh) {
 	struct sm_vec3 vec = *world;
 	sm_vec3_mul(&vec, &cam->c.mvp_mat);
