@@ -45,7 +45,7 @@ _cal_mat(struct c25_camera* cam) {
 
 	sm_mat4_mul(&cam->mv_mat, &rmat, &tmat);
 
-	sm_mat4_perspective(&cam->proj_mat, -cam->aspect, cam->aspect, -1, 1, 1, 9999);
+	sm_mat4_perspective(&cam->proj_mat, 45, cam->aspect, 0.01f, 9999);
 
 	_update_var_cache(cam);
 }
